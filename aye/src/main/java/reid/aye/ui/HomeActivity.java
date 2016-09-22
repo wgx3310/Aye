@@ -29,12 +29,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(mToggle);
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mToggle.syncState();
-            }
-        });
+        mHandler.post(() -> mToggle.syncState());
 
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
