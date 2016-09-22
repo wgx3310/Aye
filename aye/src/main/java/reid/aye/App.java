@@ -1,10 +1,9 @@
 package reid.aye;
 
 import android.app.Application;
-import android.content.Context;
 
 import reid.common.content.Contexts;
-import reid.common.net.Nets;
+import reid.common.net.Https;
 
 /**
  * Created by wgx33 on 2016/9/10.
@@ -12,17 +11,11 @@ import reid.common.net.Nets;
 
 public class App extends Application {
 
-    private static Context mAppContext;
-    public static Context getAppContext(){
-        return mAppContext;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
-        mAppContext = getApplicationContext();
-        Contexts.init(mAppContext);
 
-        Nets.init();
+        Contexts.init(getApplicationContext());
+        Https.init();
     }
 }

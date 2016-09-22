@@ -8,13 +8,13 @@ import okhttp3.OkHttpClient;
  * Created by wgx33 on 2016/9/10.
  */
 
-public class Nets {
+public class Https {
 
     private static OkHttpClient mOkHttpClient;
 
     public static OkHttpClient client(){
         if (mOkHttpClient == null){
-            synchronized (Nets.class){
+            synchronized (Https.class){
                 if (mOkHttpClient == null){
                     initOkHttpClient();
                 }
