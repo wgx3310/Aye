@@ -2,42 +2,76 @@ package reid.aye.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import reid.aye.R;
+import reid.aye.adapter.RecyclerAdapter;
+import reid.aye.fragment.BaseFragment;
+import reid.aye.fragment.RecyclerFragment;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavView;
-    private FrameLayout mContentLayout;
+    private Toolbar mToolbar;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private RecyclerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.addDrawerListener(mToggle);
-        mHandler.post(() -> mToggle.syncState());
+        initDrawer();
+        initNavigation();
+        initViewPager();
+        initTabLayout();
+    }
 
+    private void initTabLayout() {
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mTabLayout.setupWithViewPager(mViewPager, true);
+    }
+
+    private void initViewPager() {
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mAdapter = new RecyclerAdapter(getFragmentManager(), initFragmentList());
+        mViewPager.setAdapter(mAdapter);
+    }
+
+    private List<BaseFragment> initFragmentList() {
+        List<BaseFragment> fragmentList = new ArrayList<>();
+        fragmentList.add(RecyclerFragment.newInstance("Tab1"));
+        fragmentList.add(RecyclerFragment.newInstance("Tab2"));
+        fragmentList.add(RecyclerFragment.newInstance("Tab3"));
+        return fragmentList;
+    }
+
+    //init navigation view
+    private void initNavigation() {
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
+    }
 
-        mContentLayout = (FrameLayout) findViewById(R.id.content_layout);
-        TextView view = new TextView(this);
-        view.setText("this is Aye!");
-        mContentLayout.addView(view);
+    //init drawer layout and drawer toggle
+    private void initDrawer() {
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(mToggle);
+        mHandler.post(() -> mToggle.syncState());
     }
 
     @Override
@@ -69,12 +103,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDrawer.closeDrawer(GravityCompat.START);
-            }
-        }, 200);
+        mHandler.postDelayed(()->mDrawer.closeDrawer(GravityCompat.START), 200);
 
         return true;
     }
