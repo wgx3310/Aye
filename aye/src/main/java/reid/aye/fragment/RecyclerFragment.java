@@ -1,17 +1,20 @@
 package reid.aye.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
+import reid.aye.R;
 
 /**
  * Created by wgx33 on 2016/9/22.
  */
 
 public class RecyclerFragment extends BaseFragment {
+
+    private SwipeRefreshLayout mSwipeLayout;
+    private RecyclerView mRecyclerView;
 
     private String mTitle;
 
@@ -29,16 +32,20 @@ public class RecyclerFragment extends BaseFragment {
         mTitle = getArguments().getString("title");
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView view = new TextView(getActivity());
-        view.setText("this is " + getTitle());
-        return view;
-    }
-
     @Override
     public String getTitle() {
         return mTitle;
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_recycler;
+    }
+
+    @Override
+    protected void initView(View root) {
+        mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_layout);
+
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
     }
 }

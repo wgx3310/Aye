@@ -49,6 +49,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mAdapter = new RecyclerAdapter(getFragmentManager(), initFragmentList());
+        mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
     }
 
@@ -57,6 +58,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentList.add(RecyclerFragment.newInstance("Tab1"));
         fragmentList.add(RecyclerFragment.newInstance("Tab2"));
         fragmentList.add(RecyclerFragment.newInstance("Tab3"));
+        fragmentList.add(RecyclerFragment.newInstance("Tab4"));
+        fragmentList.add(RecyclerFragment.newInstance("Tab5"));
         return fragmentList;
     }
 
