@@ -11,5 +11,6 @@
     <color name="divider">#BDBDBD</color>
 
 
+    <color name="tab_text_color">#AAFFFFFF</color>
 
 </resources>

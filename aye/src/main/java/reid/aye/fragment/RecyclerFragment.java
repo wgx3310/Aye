@@ -2,10 +2,12 @@ package reid.aye.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import reid.aye.R;
+import reid.aye.adapter.BlockAdapter;
 
 /**
  * Created by wgx33 on 2016/9/22.
@@ -45,7 +47,14 @@ public class RecyclerFragment extends BaseFragment {
     @Override
     protected void initView(View root) {
         mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_layout);
+        initRecyclerView();
+    }
 
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+    private void initRecyclerView() {
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        BlockAdapter adapter = new BlockAdapter();
+        mRecyclerView.setAdapter(adapter);
     }
 }

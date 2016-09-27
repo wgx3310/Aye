@@ -1,7 +1,8 @@
 package reid.aye.adapter;
 
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentStatePagerAdapter;
+
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,10 @@ import reid.aye.fragment.BaseFragment;
  * Created by wgx33 on 2016/9/22.
  */
 
-public class RecyclerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<BaseFragment> mFragments = new ArrayList<>();
-    public RecyclerAdapter(FragmentManager fm, List<BaseFragment> list) {
+    public ViewPagerAdapter(FragmentManager fm, List<BaseFragment> list) {
         super(fm);
         mFragments.clear();
         if (list != null){

@@ -2,21 +2,14 @@ package reid.aye.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import reid.aye.R;
-import reid.aye.adapter.RecyclerAdapter;
-import reid.aye.fragment.BaseFragment;
-import reid.aye.fragment.RecyclerFragment;
+import reid.aye.fragment.HomeFragment;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,9 +17,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavView;
     private Toolbar mToolbar;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private RecyclerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +27,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         initDrawer();
         initNavigation();
-        initViewPager();
-        initTabLayout();
-    }
 
-    private void initTabLayout() {
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        mTabLayout.setupWithViewPager(mViewPager, true);
-    }
-
-    private void initViewPager() {
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mAdapter = new RecyclerAdapter(getFragmentManager(), initFragmentList());
-        mViewPager.setOffscreenPageLimit(mAdapter.getCount());
-        mViewPager.setAdapter(mAdapter);
-    }
-
-    private List<BaseFragment> initFragmentList() {
-        List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(RecyclerFragment.newInstance("Tab1"));
-        fragmentList.add(RecyclerFragment.newInstance("Tab2"));
-        fragmentList.add(RecyclerFragment.newInstance("Tab3"));
-        fragmentList.add(RecyclerFragment.newInstance("Tab4"));
-        fragmentList.add(RecyclerFragment.newInstance("Tab5"));
-        return fragmentList;
+        getSupportFragmentManager().beginTransaction().add(R.id.content_layout, HomeFragment.newInstance()).commitAllowingStateLoss();
     }
 
     //init navigation view

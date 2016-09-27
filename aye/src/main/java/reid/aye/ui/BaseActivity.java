@@ -12,6 +12,7 @@ public class BaseActivity extends AppCompatActivity {
     protected Handler mHandler = new Handler();
 
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
