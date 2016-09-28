@@ -3,14 +3,13 @@ package reid.aye.ui;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v13.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 
 import java.util.Random;
 
 import reid.aye.R;
+import reid.common.util.Logger;
 
 public class SplashActivity extends BaseActivity {
 
@@ -38,6 +37,7 @@ public class SplashActivity extends BaseActivity {
                     startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                     finish();
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    Logger.d(TAG, "animator finish, start home activity");
                 });
         mAnimator.start();
     }

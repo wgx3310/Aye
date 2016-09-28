@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import reid.aye.R;
 import reid.aye.fragment.HomeFragment;
@@ -17,6 +18,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavView;
     private Toolbar mToolbar;
+
+    private long mLastBackTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
+        } else if (System.currentTimeMillis() - mLastBackTime > 2000) {
+            Toast.makeText(this, R.string.w_exit_app, Toast.LENGTH_SHORT).show();
+            mLastBackTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();
         }
