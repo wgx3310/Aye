@@ -11,4 +11,12 @@
     <dimen name="tab_height">48dp</dimen>
     <dimen name="tab_indicator_height">4dp</dimen>
     <!-- tab end -->
+
+    <!-- font size start -->
+    <dimen name="font_size_36">12dp</dimen>
+    <dimen name="font_size_42">14dp</dimen>
+    <dimen name="font_size_51">17dp</dimen>
+    <dimen name="font_size_60">20dp</dimen>
+    <dimen name="font_size_72">24dp</dimen>
+    <!-- font size end -->
 </resources>

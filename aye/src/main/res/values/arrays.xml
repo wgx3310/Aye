@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="splash_imgs">
+        <item>@drawable/splash_01</item>
+        <item>@drawable/splash_02</item>
+        <item>@drawable/splash_02</item>
+    </integer-array>
+</resources>
