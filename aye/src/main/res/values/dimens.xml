@@ -19,4 +19,8 @@
     <dimen name="font_size_60">20dp</dimen>
     <dimen name="font_size_72">24dp</dimen>
     <!-- font size end -->
+
+    <!-- common size start -->
+    <dimen name="size_150">50dp</dimen>
+    <!-- common size end -->
 </resources>

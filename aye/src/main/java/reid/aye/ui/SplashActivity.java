@@ -3,12 +3,14 @@ package reid.aye.ui;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 
 import java.util.Random;
 
 import reid.aye.R;
+import reid.common.pref.SettingPrefs;
 import reid.common.util.Logger;
 
 public class SplashActivity extends BaseActivity {
@@ -31,6 +33,12 @@ public class SplashActivity extends BaseActivity {
 
         ImageView img = (ImageView) findViewById(R.id.splash_img);
         img.setImageResource(resIds[index]);
+
+        SettingPrefs settingPrefs = SettingPrefs.getInstance();
+        if (settingPrefs.isFirstLaunch()){
+            findViewById(R.id.splash_hint).setVisibility(View.VISIBLE);
+            settingPrefs.setHasLaunch();
+        }
 
         mAnimator = img.animate().scaleX(1.13f).scaleY(1.13f).setDuration(4000)
                 .setStartDelay(1000).withEndAction(()->{

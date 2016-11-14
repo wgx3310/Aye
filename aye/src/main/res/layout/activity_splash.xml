@@ -11,4 +11,16 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/splash_01" />
+
+    <TextView
+        android:id="@+id/splash_hint"
+        android:text="@string/hint_first_launch"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/font_size_51"
+        android:layout_marginBottom="@dimen/size_150"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 </RelativeLayout>
