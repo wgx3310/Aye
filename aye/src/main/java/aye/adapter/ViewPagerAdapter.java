@@ -10,7 +10,7 @@ import java.util.List;
 import aye.fragment.BaseFragment;
 
 /**
- * Created by wgx33 on 2016/9/22.
+ * Created by reid on 2016/9/22.
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

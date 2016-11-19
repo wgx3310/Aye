@@ -11,7 +11,7 @@ import reid.aye.R;
 import aye.adapter.ViewPagerAdapter;
 
 /**
- * Created by wgx33 on 2016/9/27.
+ * Created by reid on 2016/9/27.
  */
 
 public class HomeFragment extends BaseFragment {

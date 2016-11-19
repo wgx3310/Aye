@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import aye.content.Contexts;
 
 /**
- * Created by wgx33 on 2016/11/14.
+ * Created by reid on 2016/11/14.
  */
 
 public class BasePrefs {

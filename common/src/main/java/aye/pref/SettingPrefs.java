@@ -1,7 +1,7 @@
 package aye.pref;
 
 /**
- * Created by wgx33 on 2016/11/14.
+ * Created by reid on 2016/11/14.
  */
 
 public class SettingPrefs extends BasePrefs{

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by wgx33 on 2016/9/27.
+ * Created by reid on 2016/9/27.
  */
 
 public class BlockAdapter extends RecyclerView.Adapter<BlockAdapter.VH> {

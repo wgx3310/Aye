@@ -10,7 +10,7 @@ import reid.aye.R;
 import aye.adapter.BlockAdapter;
 
 /**
- * Created by wgx33 on 2016/9/22.
+ * Created by reid on 2016/9/22.
  */
 
 public class RecyclerFragment extends BaseFragment {

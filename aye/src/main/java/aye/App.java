@@ -1,9 +1,8 @@
 package aye;
 
-import aye.net.Https;
 
 /**
- * Created by wgx33 on 2016/9/10.
+ * Created by reid on 2016/9/10.
  */
 
 public class App extends CommApp {
@@ -12,6 +11,5 @@ public class App extends CommApp {
     public void onCreate() {
         super.onCreate();
 
-        Https.init();
     }
 }

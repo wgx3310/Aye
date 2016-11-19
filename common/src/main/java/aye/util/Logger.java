@@ -6,7 +6,7 @@ import android.util.Log;
 import aye.Constants;
 
 /**
- * Created by wgx33 on 2016/9/22.
+ * Created by reid on 2016/9/22.
  */
 
 public class Logger {
