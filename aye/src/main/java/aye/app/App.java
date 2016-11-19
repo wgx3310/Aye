@@ -1,5 +1,7 @@
-package aye;
+package aye.app;
 
+
+import aye.CommApp;
 
 /**
  * Created by reid on 2016/9/10.

@@ -8,4 +8,6 @@ public class Constants {
     public static boolean DEBUG = true;
 
 
+    public static final String API_SCHEMA = "aye";
+    public static final String API_HOST = "reid";
 }

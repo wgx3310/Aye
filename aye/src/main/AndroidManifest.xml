@@ -3,7 +3,7 @@
     package="reid.aye">
 
     <application
-        android:name="aye.App"
+        android:name="aye.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +26,22 @@
             android:name="aye.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="aye.app.ApiActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="aye" android:host="reid" android:pathPrefix="/home"/>
+                <data android:scheme="aye" android:host="reid" android:pathPrefix="/setting"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
