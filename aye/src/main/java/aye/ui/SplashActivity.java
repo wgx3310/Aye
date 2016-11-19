@@ -40,7 +40,7 @@ public class SplashActivity extends BaseActivity {
             settingPrefs.setHasLaunch();
         }
 
-        mAnimator = img.animate().scaleX(1.13f).scaleY(1.13f).setDuration(4000)
+        mAnimator = img.animate().scaleX(1.13f).scaleY(1.13f).setDuration(2000)
                 .setStartDelay(1000).withEndAction(()->{
                     startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                     finish();

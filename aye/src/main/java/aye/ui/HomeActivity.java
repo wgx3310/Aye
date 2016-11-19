@@ -1,5 +1,6 @@
 package aye.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,13 +35,17 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         getSupportFragmentManager().beginTransaction().add(R.id.content_layout, HomeFragment.newInstance()).commitAllowingStateLoss();
     }
 
-    //init navigation view
+    /**
+     * init navigation view
+     */
     private void initNavigation() {
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
     }
 
-    //init drawer layout and drawer toggle
+    /**
+     * init drawer layout and drawer toggle
+     */
     private void initDrawer() {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,20 +65,23 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
+        switch (item.getItemId()){
+            case R.id.nav_news:
+                break;
+            case R.id.nav_camera:
+                break;
+            case R.id.nav_manage:
+                break;
+            case R.id.nav_share:
+                break;
+            case R.id.nav_setting:
+                Intent settingIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingIntent);
+                break;
         }
-
         mHandler.postDelayed(()->mDrawer.closeDrawer(GravityCompat.START), 200);
 
         return true;
