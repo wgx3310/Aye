@@ -10,4 +10,7 @@ public class Constants {
 
     public static final String API_SCHEMA = "aye";
     public static final String API_HOST = "reid";
+
+    public static final String API_KEY          = "x457_VKnEUiNinik5bQUnw==";
+    public static final String API_TOKEN        = "C8u617rK4WUQyyv1rZPT3B6gfDDndZudprPrRerZy6gUA=";
 }

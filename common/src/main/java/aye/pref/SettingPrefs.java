@@ -25,6 +25,6 @@ public class SettingPrefs extends BasePrefs{
     }
 
     public void setHasLaunch() {
-        setBoolean("first_launch", false);
+        putBoolean("first_launch", false);
     }
 }

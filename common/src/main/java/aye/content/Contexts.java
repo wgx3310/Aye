@@ -10,7 +10,7 @@ public class Contexts {
     private static Context mAppContext;
 
     public static void init(Context context){
-        mAppContext = context;
+        mAppContext = context.getApplicationContext();
     }
 
     public static Context getContext(){
