@@ -3,7 +3,7 @@ package aye;
 import android.app.Application;
 
 import aye.content.Contexts;
-import aye.net.Https;
+import aye.net.HttpEngine;
 import aye.util.FontUtils;
 
 /**
@@ -19,6 +19,5 @@ public class CommApp extends Application {
 
         //设置系统默认字体
         FontUtils.resetTypefaceDefaultFont("SERIF", getApplicationContext(), "fonts/default.otf");
-        Https.init();
     }
 }
