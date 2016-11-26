@@ -1,11 +1,14 @@
 package aye.net;
 
 
+import android.util.Log;
+
 import aye.lang.DisplayItemFactory;
 import aye.lang.Logger;
 import aye.model.Block;
 import aye.model.DisplayItem;
 import aye.model.main.MainDaily;
+import aye.model.main.MainHot;
 import aye.util.RxUtils;
 import rx.Observable;
 import rx.functions.Func1;
@@ -26,7 +29,7 @@ public class DataLoader {
                         .map(new Func1<MainDaily, Block<DisplayItem>>() {
                             @Override
                             public Block<DisplayItem> call(MainDaily mainDaily) {
-                                Logger.e("TAG", "DataLoader loadData " + mainDaily);
+                                Logger.e("TAG", "DataLoader loadData getDailyList" + mainDaily);
                                 return DisplayItemFactory.convertMainDaily2Block(mainDaily);
                             }
                         });
@@ -38,6 +41,15 @@ public class DataLoader {
             case "互联网":
                 break;
             case "热门":
+                observable = ApiCreator.getMainApi().getHotList()
+                        .compose(RxUtils.rxSchedulerHelper())
+                        .map(new Func1<MainHot, Block<DisplayItem>>() {
+                            @Override
+                            public Block<DisplayItem> call(MainHot hot) {
+                                Log.e("TAG", "DataLoader loadData getHotList" + hot);
+                                return DisplayItemFactory.convertMainHot2Block(hot);
+                            }
+                        });
                 break;
         }
 

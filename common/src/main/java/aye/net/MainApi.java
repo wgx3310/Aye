@@ -2,6 +2,7 @@ package aye.net;
 
 
 import aye.model.main.MainDaily;
+import aye.model.main.MainHot;
 import retrofit2.http.GET;
 import rx.Observable;
 
@@ -14,4 +15,6 @@ public interface MainApi {
     @GET("news/latest")
     Observable<MainDaily> getDailyList();
 
+    @GET("news/hot")
+    Observable<MainHot> getHotList();
 }

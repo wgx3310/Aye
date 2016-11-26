@@ -16,7 +16,7 @@ public class MainDaily implements Serializable{
     public List<Story> stories;
     public List<Story> top_stories;
 
-    public static class Story{
+    public static class Story implements Serializable{
         public int id;
         public int type;
         @SerializedName("ga_prefix")
