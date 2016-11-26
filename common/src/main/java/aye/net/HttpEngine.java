@@ -62,7 +62,7 @@ public class HttpEngine {
                     .client(client())
                     .addConverterFactory(mGsonConverter)
                     .addCallAdapterFactory(mRxJavaCallAdapter)
-                    .baseUrl("")
+                    .baseUrl("http://news-at.zhihu.com/api/4/")
                     .build();
         }
     }

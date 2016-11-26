@@ -5,4 +5,12 @@
         <item>@drawable/splash_02</item>
         <item>@drawable/splash_02</item>
     </integer-array>
+
+    <string-array name="main_title">
+        <item>精选</item>
+        <item>设计</item>
+        <item>电影</item>
+        <item>互联网</item>
+        <item>热门</item>
+    </string-array>
 </resources>

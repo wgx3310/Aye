@@ -1,4 +1,4 @@
-package aye.util;
+package aye.lang;
 
 import android.text.TextUtils;
 import android.util.Log;

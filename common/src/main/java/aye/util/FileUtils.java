@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import java.io.File;
 
 import aye.content.Contexts;
+import aye.lang.Logger;
 
 /**
  * Created by reid on 2016/11/19.

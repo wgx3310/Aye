@@ -44,11 +44,10 @@ public class HomeFragment extends BaseFragment {
 
     private List<BaseFragment> initFragmentList() {
         List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(RecyclerFragment.newInstance("精选"));
-        fragmentList.add(RecyclerFragment.newInstance("视频"));
-        fragmentList.add(RecyclerFragment.newInstance("音乐"));
-        fragmentList.add(RecyclerFragment.newInstance("直播"));
-        fragmentList.add(RecyclerFragment.newInstance("新闻"));
+        String[] titleArray = getResources().getStringArray(R.array.main_title);
+        for (String title : titleArray){
+            fragmentList.add(RecyclerFragment.newInstance(title));
+        }
         return fragmentList;
     }
 

@@ -7,6 +7,8 @@ package aye.net;
 public class ApiCreator {
 
     private static BiliApi mBiliApi;
+    private static MainApi mMainApi;
+
     public static synchronized BiliApi getBiliApi(){
         if (mBiliApi == null){
             mBiliApi = HttpEngine.get().createApi(BiliApi.class);
@@ -14,6 +16,11 @@ public class ApiCreator {
         return mBiliApi;
     }
 
-
+    public static synchronized MainApi getMainApi(){
+        if (mMainApi == null){
+            mMainApi = HttpEngine.get().createApi(MainApi.class);
+        }
+        return mMainApi;
+    }
 
 }

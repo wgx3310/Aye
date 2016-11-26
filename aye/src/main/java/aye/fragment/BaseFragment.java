@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import aye.ui.BaseActivity;
+import rx.Subscription;
+
 /**
  * Created by reid on 2016/9/22.
  */
@@ -37,4 +40,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutResId();
     protected abstract void initView(View root);
+
+    protected void addSubscription(Subscription s){
+        if (getActivity() instanceof BaseActivity){
+            ((BaseActivity)getActivity()).addSubscription(s);
+        }
+    }
 }

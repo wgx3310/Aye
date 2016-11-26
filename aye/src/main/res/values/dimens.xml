@@ -21,6 +21,7 @@
     <!-- font size end -->
 
     <!-- common size start -->
+    <dimen name="size_24">8dp</dimen>
     <dimen name="size_150">50dp</dimen>
     <!-- common size end -->
 </resources>

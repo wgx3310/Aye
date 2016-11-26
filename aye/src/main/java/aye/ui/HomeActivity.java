@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import aye.util.ToastUtils;
 import reid.aye.R;
 import aye.fragment.HomeFragment;
 
@@ -58,7 +59,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else if (System.currentTimeMillis() - mLastBackTime > 2000) {
-            Toast.makeText(this, R.string.w_exit_app, Toast.LENGTH_SHORT).show();
+            ToastUtils.show(R.string.w_exit_app);
             mLastBackTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();

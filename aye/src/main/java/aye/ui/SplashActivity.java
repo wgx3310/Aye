@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.util.Random;
 
 import aye.pref.SettingPrefs;
-import aye.util.Logger;
+import aye.lang.Logger;
 import reid.aye.R;
 
 public class SplashActivity extends BaseActivity {
