@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Aye.iml" filepath="$PROJECT_DIR$/Aye.iml" />
       <module fileurl="file://$PROJECT_DIR$/aye/aye.iml" filepath="$PROJECT_DIR$/aye/aye.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recycler/recycler.iml" filepath="$PROJECT_DIR$/recycler/recycler.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,1 @@
-include ':aye', ':common'
+include ':aye', ':common', ':recycler'
