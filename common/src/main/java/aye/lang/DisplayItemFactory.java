@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import aye.model.Block;
 import aye.model.DisplayItem;
-import aye.model.main.MainDaily;
+import aye.model.main.MainStory;
 import aye.model.main.MainHot;
 
 /**
@@ -16,18 +16,18 @@ public class DisplayItemFactory {
     /**
      * 将精选数据转化为Block
      */
-    public static Block<DisplayItem> convertMainDaily2Block(MainDaily mainDaily){
-        if (mainDaily == null) return null;
+    public static Block<DisplayItem> convertMainStory2Block(MainStory mainStory){
+        if (mainStory == null) return null;
 
         Block<DisplayItem> block = new Block<>();
         block.blocks = new ArrayList<>();
-        if (mainDaily.top_stories != null && !mainDaily.top_stories.isEmpty()) {
+        if (mainStory.top_stories != null && !mainStory.top_stories.isEmpty()) {
 
             Block<DisplayItem> topBlock = new Block<>();
             topBlock.ui = new DisplayItem.UI();
             topBlock.ui.put("id", String.valueOf(1));
             topBlock.items = new ArrayList<>();
-            for (MainDaily.Story story : mainDaily.top_stories) {
+            for (MainStory.Story story : mainStory.top_stories) {
                 DisplayItem item = new DisplayItem();
                 item.id = String.valueOf(story.id);
                 item.ui = new DisplayItem.UI();
@@ -42,8 +42,8 @@ public class DisplayItemFactory {
             block.blocks.add(topBlock);
         }
 
-        if (mainDaily.stories != null && !mainDaily.stories.isEmpty()) {
-            for (MainDaily.Story story : mainDaily.stories) {
+        if (mainStory.stories != null && !mainStory.stories.isEmpty()) {
+            for (MainStory.Story story : mainStory.stories) {
                 Block item = new Block();
                 item.id = String.valueOf(story.id);
                 item.ui = new DisplayItem.UI();

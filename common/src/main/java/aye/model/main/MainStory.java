@@ -9,7 +9,7 @@ import java.util.List;
  * Created by reid on 2016/11/26.
  */
 
-public class MainDaily implements Serializable{
+public class MainStory implements Serializable{
     private static final long serialVersionUID = 1L;
 
     public String date;
@@ -40,7 +40,7 @@ public class MainDaily implements Serializable{
 
     @Override
     public String toString() {
-        return "MainDaily{" +
+        return "MainStory{" +
                 "date='" + date + '\'' +
                 ", stories=" + stories +
                 ", top_stories=" + top_stories +
