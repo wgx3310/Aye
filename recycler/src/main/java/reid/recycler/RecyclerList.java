@@ -7,8 +7,6 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +25,7 @@ import java.util.List;
  * Created by reid on 2016/11/27.
  */
 
-public class RecyclerList extends FrameLayout implements NestedScrollingParent,
-        NestedScrollingChild {
+public class RecyclerList extends FrameLayout {
 
     private static final int DEFAULT_COUNT_LEFT_LOAD_MORE = 3;
     private static final int DEFAULT_SPAN_COUNT = 12;
@@ -72,7 +69,7 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
     }
 
     private void initView() {
-        View root = LayoutInflater.from(getContext()).inflate(R.layout.recycler_list, this);
+        View root = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_list, this);
         mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.layout_refresh);
         mSwipeRefresh.setEnabled(false);
 
@@ -137,9 +134,9 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             int swipeFlags = 0;
-            if (mAdapter.getSpanSize(viewHolder.getAdapterPosition()) == DEFAULT_SPAN_COUNT) {
-                swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
-            }
+//            if (mAdapter.getSpanSize(viewHolder.getAdapterPosition()) == DEFAULT_SPAN_COUNT) {
+//                swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+//            }
             return makeMovementFlags(dragFlags, swipeFlags);
         }
 
@@ -168,6 +165,11 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
 
         @Override
         public boolean isLongPressDragEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean isItemViewSwipeEnabled() {
             return false;
         }
     };
@@ -212,17 +214,17 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
         }
 
         //长击事件
-        @Override
-        public void onLongPress(MotionEvent e) {
-            super.onLongPress(e);
-            View childView = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (childView != null) {
-                RecyclerView.ViewHolder vh = mRecyclerView.getChildViewHolder(childView);
-                if (mAdapter.isLongPressDragEnable(vh.getAdapterPosition())) {
-                    mItemTouchHelper.startDrag(vh);
-                }
-            }
-        }
+//        @Override
+//        public void onLongPress(MotionEvent e) {
+//            super.onLongPress(e);
+//            View childView = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+//            if (childView != null) {
+//                RecyclerView.ViewHolder vh = mRecyclerView.getChildViewHolder(childView);
+//                if (mAdapter.isLongPressDragEnable(vh.getAdapterPosition())) {
+//                    mItemTouchHelper.startDrag(vh);
+//                }
+//            }
+//        }
     }
 
     private RecyclerView.OnScrollListener mInternalOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -271,6 +273,14 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
      */
     public void setAdapter(Adapter adapter) {
         setAdapterInternal(adapter, false, true);
+    }
+
+    public void setAdapter(Adapter adapter, boolean compatibleWithPrevious) {
+        setAdapterInternal(adapter, compatibleWithPrevious, true);
+    }
+
+    public void swapAdapter(Adapter adapter, boolean removeAndRecycleExistingViews) {
+        setAdapterInternal(adapter, true, removeAndRecycleExistingViews);
     }
 
     private void setAdapterInternal(Adapter adapter, boolean compatibleWithPrevious, boolean removeAndRecycleExistingViews) {
@@ -413,6 +423,9 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
         void onLoadMore(int itemCount, int itemBeforeMoreCount, int maxLastVisiblePosition);
     }
 
+    /**
+     * item点击事件回调
+     */
     public interface OnItemClickListener {
         void onItemClick(RecyclerView rv, RecyclerView.ViewHolder vh);
     }
@@ -423,22 +436,54 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
     public static abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter {
 
         private List<T> mData;
-        private Context mContext;
 
-        public Adapter(Context context, List<T> data) {
+        public Adapter(List<T> data) {
             if (data == null) {
                 throw new IllegalArgumentException("data may not be null");
             }
             mData = data;
-            mContext = context;
         }
 
         public List<T> getData() {
             return mData;
         }
 
-        protected Context getContext() {
-            return mContext;
+        /**
+         * 设置数据源
+         */
+        public void setData(List<T> data) {
+            if (data != null) {
+                mData = data;
+                notifyDataSetChanged();
+            }
+        }
+
+        /**
+         * 添加数据
+         */
+        public void addData(List<T> data) {
+            if (data != null) {
+                int startIndex = mData.size();
+                mData.addAll(startIndex, data);
+                notifyItemRangeInserted(startIndex, data.size());
+            }
+        }
+
+        /**
+         * 删除position位置数据
+         */
+        public void remove(int position) {
+            mData.remove(position);
+            notifyItemRemoved(position);
+        }
+
+        /**
+         * 清除Adapter所有数据
+         */
+        public void clear() {
+            int size = mData.size();
+            mData.clear();
+            notifyItemRangeRemoved(0, size);
         }
 
         @Override
@@ -449,7 +494,16 @@ public class RecyclerList extends FrameLayout implements NestedScrollingParent,
             return 0;
         }
 
-        public abstract int getSpanSize(int position);
+        public int getSpanSize(int position) {
+            return DEFAULT_SPAN_COUNT;
+        }
+
+        //获取第position个item数据
+        public T getItem(int position) {
+            if (position < 0 || position >= mData.size()) return null;
+
+            return mData.get(position);
+        }
 
         public boolean isLongPressDragEnable(int position) {
             return false;

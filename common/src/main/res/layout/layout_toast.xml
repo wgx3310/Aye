@@ -7,6 +7,5 @@
     android:gravity="center"
     android:maxWidth="200dp"
     android:padding="8dp"
-    android:text="当前已是最新版本"
-    android:textColor="#5f5f5f"
+    android:textColor="@android:color/background_light"
     android:textSize="16sp" />
