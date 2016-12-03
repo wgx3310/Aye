@@ -3,8 +3,6 @@ package aye.view;
 import android.content.Context;
 
 import aye.app.LayoutConstants;
-import aye.model.Block;
-import aye.model.DisplayItem;
 import aye.view.block.DefaultCardView;
 import aye.view.block.SliderCardView;
 

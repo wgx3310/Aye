@@ -9,5 +9,5 @@ public class LayoutConstants {
 
     public static final int ID_CARD_SLIDE = 1; //轮播图
 
-    public static final int ID_VIEW_ANGLE = 1000;
+    public static final int ID_VIEW_DEFAULT = 1000;
 }

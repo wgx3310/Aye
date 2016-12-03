@@ -2,6 +2,7 @@ package reid.recycler;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import aye.Constants;
+
 /**
  * Created by reid on 2016/11/27.
  */
@@ -29,7 +32,7 @@ import java.util.List;
 public class RecyclerList extends FrameLayout {
 
     private static final int DEFAULT_COUNT_LEFT_LOAD_MORE = 3;
-    public static final int DEFAULT_SPAN_COUNT = 12;
+    public static final int DEFAULT_SPAN_COUNT = Constants.DEFAULT_RECYCLER_SPAN_COUNT;
 
     private boolean mClipToPadding;
     private int mPadding;
@@ -63,7 +66,8 @@ public class RecyclerList extends FrameLayout {
         this(context, attrs, 0);
     }
 
-    public RecyclerList(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public RecyclerList(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int
+            defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
         initView();
@@ -72,6 +76,7 @@ public class RecyclerList extends FrameLayout {
     private void initView() {
         View root = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_list, this);
         mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.layout_refresh);
+        mSwipeRefresh.setClipChildren(false);
         mSwipeRefresh.setEnabled(false);
 
         mMoreView = root.findViewById(R.id.layout_more);
@@ -92,9 +97,11 @@ public class RecyclerList extends FrameLayout {
         mClipToPadding = array.getBoolean(R.styleable.RecyclerList_clipToPadding, false);
         mPadding = array.getInt(R.styleable.RecyclerList_recyclerPadding, -1);
         mPaddingTop = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingTop, 0.0f);
-        mPaddingBottom = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingBottom, 0.0f);
+        mPaddingBottom = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingBottom,
+                0.0f);
         mPaddingLeft = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingLeft, 0.0f);
-        mPaddingRight = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingRight, 0.0f);
+        mPaddingRight = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingRight,
+                0.0f);
         array.recycle();
     }
 
@@ -102,6 +109,7 @@ public class RecyclerList extends FrameLayout {
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
+        mRecyclerView.setClipChildren(false);
         mRecyclerView.setClipToPadding(mClipToPadding);
         if (mPadding != -1f) {
             mRecyclerView.setPadding(mPadding, mPadding, mPadding, mPadding);
@@ -113,6 +121,7 @@ public class RecyclerList extends FrameLayout {
         mLayoutManager = new GridLayoutManager(getContext(), DEFAULT_SPAN_COUNT);
         mLayoutManager.setSpanSizeLookup(mDefaultSpanSizeLookup);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(mDefaultItemDecoration);
         mRecyclerView.addOnScrollListener(mInternalOnScrollListener);
         mRecyclerView.addOnItemTouchListener(new OnRecyclerItemTouchListener());
 
@@ -120,7 +129,8 @@ public class RecyclerList extends FrameLayout {
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
-    private GridLayoutManager.SpanSizeLookup mDefaultSpanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
+    private GridLayoutManager.SpanSizeLookup mDefaultSpanSizeLookup = new GridLayoutManager
+            .SpanSizeLookup() {
         @Override
         public int getSpanSize(int position) {
             if (mAdapter != null) {
@@ -130,10 +140,39 @@ public class RecyclerList extends FrameLayout {
         }
     };
 
+    private RecyclerView.ItemDecoration mDefaultItemDecoration = new RecyclerView.ItemDecoration(){
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView
+                .State state) {
+            int childAdapterPosition = parent.getChildAdapterPosition(view);
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = mLayoutManager
+                    .getSpanSizeLookup();
+            int spanIndex = spanSizeLookup.getSpanIndex(childAdapterPosition, mLayoutManager
+                    .getSpanCount());
+            int spanSize = spanSizeLookup.getSpanSize(childAdapterPosition);
+
+            int bottom = getResources().getDimensionPixelOffset(R.dimen.size_30);
+            int padding = getResources().getDimensionPixelOffset(R.dimen.size_40);
+            int divider = getResources().getDimensionPixelOffset(R.dimen.size_10);
+            if (spanSize == mLayoutManager.getSpanCount()) {
+                outRect.set(0, 0, 0, bottom);
+            } else {
+                if (spanIndex == 0) {
+                    outRect.set(padding, 0, divider, bottom);
+                } else if (spanIndex + spanSize == mLayoutManager.getSpanCount()) {
+                    outRect.set(divider, 0, padding, bottom);
+                } else {
+                    outRect.set(divider, 0, divider, bottom);
+                }
+            }
+        }
+    };
+
     private ItemTouchHelper.Callback mItemTouchCallback = new ItemTouchHelper.Callback() {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT |
+                    ItemTouchHelper.RIGHT;
             int swipeFlags = 0;
 //            if (mAdapter.getSpanSize(viewHolder.getAdapterPosition()) == DEFAULT_SPAN_COUNT) {
 //                swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
@@ -142,7 +181,8 @@ public class RecyclerList extends FrameLayout {
         }
 
         @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                              RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
             if (fromPosition < toPosition) {
@@ -228,7 +268,8 @@ public class RecyclerList extends FrameLayout {
 //        }
     }
 
-    private RecyclerView.OnScrollListener mInternalOnScrollListener = new RecyclerView.OnScrollListener() {
+    private RecyclerView.OnScrollListener mInternalOnScrollListener = new RecyclerView
+            .OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -257,14 +298,14 @@ public class RecyclerList extends FrameLayout {
         int itemCount = layoutManager.getItemCount();
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
-        if (((itemCount - lastVisibleItemPosition) <= mItemCountLeftToLoadMore ||
-                (itemCount - lastVisibleItemPosition) == 0 && itemCount > visibleChildCount)
-                && !isLoadingMore) {
+        if (((itemCount - lastVisibleItemPosition) <= mItemCountLeftToLoadMore || (itemCount -
+                lastVisibleItemPosition) == 0 && itemCount > visibleChildCount) && !isLoadingMore) {
 
             if (mOnLoadMoreListener != null) {
                 isLoadingMore = true;
                 mMoreView.setVisibility(View.VISIBLE);
-                mOnLoadMoreListener.onLoadMore(itemCount, mItemCountLeftToLoadMore, lastVisibleItemPosition);
+                mOnLoadMoreListener.onLoadMore(itemCount, mItemCountLeftToLoadMore,
+                        lastVisibleItemPosition);
             }
         }
     }
@@ -284,7 +325,8 @@ public class RecyclerList extends FrameLayout {
         setAdapterInternal(adapter, true, removeAndRecycleExistingViews);
     }
 
-    private void setAdapterInternal(Adapter adapter, boolean compatibleWithPrevious, boolean removeAndRecycleExistingViews) {
+    private void setAdapterInternal(Adapter adapter, boolean compatibleWithPrevious, boolean
+            removeAndRecycleExistingViews) {
         if (compatibleWithPrevious) {
             mRecyclerView.swapAdapter(adapter, removeAndRecycleExistingViews);
         } else {
@@ -300,7 +342,8 @@ public class RecyclerList extends FrameLayout {
             mAdapter.registerAdapterDataObserver(mAdapterDataObserver);
         }
 
-        mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+        mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE :
+                View.VISIBLE);
     }
 
     private void notifyAdapterChanged() {
@@ -315,7 +358,8 @@ public class RecyclerList extends FrameLayout {
         }
     }
 
-    private RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
+    private RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView
+            .AdapterDataObserver() {
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
             super.onItemRangeChanged(positionStart, itemCount);
@@ -366,16 +410,18 @@ public class RecyclerList extends FrameLayout {
 
     /**
      * 刷新完成
+     *
      * @param refreshing
      */
-    public void setRefreshing(boolean refreshing){
+    public void setRefreshing(boolean refreshing) {
         mSwipeRefresh.setRefreshing(refreshing);
     }
 
     /**
      * Set the colors for the SwipeRefreshLayout states
      */
-    public void setRefreshingColorResources(@ColorRes int colRes1, @ColorRes int colRes2, @ColorRes int colRes3, @ColorRes int colRes4) {
+    public void setRefreshingColorResources(@ColorRes int colRes1, @ColorRes int colRes2,
+                                            @ColorRes int colRes3, @ColorRes int colRes4) {
         mSwipeRefresh.setColorSchemeResources(colRes1, colRes2, colRes3, colRes4);
     }
 
@@ -400,7 +446,7 @@ public class RecyclerList extends FrameLayout {
     /**
      * 更多加载完成
      */
-    public void onLoadCompleted(){
+    public void onLoadCompleted() {
         isLoadingMore = false;
         mMoreView.setVisibility(View.GONE);
     }
@@ -450,7 +496,10 @@ public class RecyclerList extends FrameLayout {
     /**
      * RecyclerView Adapter基类
      */
-    public static abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter {
+    public static abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends
+            RecyclerView.Adapter {
+
+        private final int defaultItemBottomPadding = Constants.DEFAULT_ITEM_PADDING;
 
         protected List<T> mData = new ArrayList<>();
 
@@ -505,8 +554,14 @@ public class RecyclerList extends FrameLayout {
             return 0;
         }
 
+        //获取第position个item的span
         public int getSpanSize(int position) {
             return DEFAULT_SPAN_COUNT;
+        }
+
+        //获取item的BottomPadding
+        public int getItemBottomPadding(int position){
+            return defaultItemBottomPadding;
         }
 
         //获取第position个item数据

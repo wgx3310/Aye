@@ -2,11 +2,9 @@ package aye.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import aye.model.DisplayItem;
-import reid.recycler.RecyclerList;
 
 /**
  * Created by reid on 2016/9/27.
@@ -39,7 +37,4 @@ public abstract class BaseCardView<T extends DisplayItem> extends RelativeLayout
 
     protected abstract int getLayoutId();
 
-    public int getSpanSize(){
-        return RecyclerList.DEFAULT_SPAN_COUNT;
-    }
 }

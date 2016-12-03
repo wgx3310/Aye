@@ -28,5 +28,9 @@
     <dimen name="size_90">30dp</dimen>
     <dimen name="size_150">50dp</dimen>
     <dimen name="size_480">160dp</dimen>
+    <dimen name="size_600">200dp</dimen>
     <!-- common size end -->
+
+
+    <dimen name="size_minus_31">-10.33dp</dimen>
 </resources>

@@ -4,12 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import aye.model.Block;
 import aye.model.DisplayItem;
 import aye.view.BaseCardView;
 import aye.view.ViewCreator;
+import aye.view.ViewType;
 import reid.recycler.RecyclerList;
 
 /**
@@ -36,6 +35,21 @@ public class RecyclerAdapter extends RecyclerList.Adapter<Block<DisplayItem>, Re
     @Override
     public int getItemViewType(int position) {
         return getData().get(position).ui.id();
+    }
+
+    @Override
+    public int getSpanSize(int position) {
+        //for test
+        if (getItemViewType(position) > 1){
+            return 4;
+        }
+
+        return ViewType.getSpanSize(getItemViewType(position));
+    }
+
+    @Override
+    public int getItemBottomPadding(int position) {
+        return ViewType.getBottomPadding(getItemViewType(position));
     }
 
     public class VH extends RecyclerView.ViewHolder {
