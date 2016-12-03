@@ -1,4 +1,4 @@
-package aye.widget;
+package aye.view.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

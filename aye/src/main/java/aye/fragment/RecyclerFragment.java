@@ -3,12 +3,8 @@ package aye.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import aye.adapter.RecyclerAdapter;
 import aye.model.Block;
 import aye.model.DisplayItem;
 import aye.net.DataLoader;
@@ -56,14 +52,7 @@ public class RecyclerFragment extends BaseFragment {
     protected void initView(View root) {
 
         mRecyclerList = (RecyclerList) root.findViewById(R.id.recycler_list);
-
-        List<Block<DisplayItem>> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            Block<DisplayItem> block = new Block<>();
-            block.id = "pos:" + i;
-            list.add(block);
-        }
-        mAdapter = new RecyclerAdapter(list);
+        mAdapter = new RecyclerAdapter();
         mRecyclerList.setAdapter(mAdapter);
 
         mRecyclerList.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
@@ -81,39 +70,15 @@ public class RecyclerFragment extends BaseFragment {
         Observable<Block<DisplayItem>> observable = DataLoader.loadData(mTitle);
         if (observable != null) {
             Subscription subscribe = observable.subscribe(d -> {
-                mAdapter.addData(d.blocks);
-            }, t -> ToastUtils.show("加载数据失败"));
+                mAdapter.setData(d.blocks);
+            }, t -> {
+                ToastUtils.show("加载数据失败");
+                mRecyclerList.setRefreshing(false);
+            });
             addSubscription(subscribe);
         } else {
             ToastUtils.show("加载数据失败");
-        }
-    }
-
-    static class RecyclerAdapter extends RecyclerList.Adapter<Block<DisplayItem>, RecyclerAdapter.VH> {
-
-        public RecyclerAdapter(List<Block<DisplayItem>> data) {
-            super(data);
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            TextView view = new TextView(parent.getContext());
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
-            view.setLayoutParams(params);
-            return new VH(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Block<DisplayItem> item = getItem(position);
-            ((TextView) holder.itemView).setText("This is TextView, Id is " + item.id);
-        }
-
-        public static class VH extends RecyclerView.ViewHolder {
-
-            public VH(View itemView) {
-                super(itemView);
-            }
+            mRecyclerList.setRefreshing(false);
         }
     }
 }

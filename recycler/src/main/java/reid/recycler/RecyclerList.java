@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class RecyclerList extends FrameLayout {
 
     private static final int DEFAULT_COUNT_LEFT_LOAD_MORE = 3;
-    private static final int DEFAULT_SPAN_COUNT = 12;
+    public static final int DEFAULT_SPAN_COUNT = 12;
 
     private boolean mClipToPadding;
     private int mPadding;
@@ -260,8 +261,8 @@ public class RecyclerList extends FrameLayout {
                 (itemCount - lastVisibleItemPosition) == 0 && itemCount > visibleChildCount)
                 && !isLoadingMore) {
 
-            isLoadingMore = true;
             if (mOnLoadMoreListener != null) {
+                isLoadingMore = true;
                 mMoreView.setVisibility(View.VISIBLE);
                 mOnLoadMoreListener.onLoadMore(itemCount, mItemCountLeftToLoadMore, lastVisibleItemPosition);
             }
@@ -364,6 +365,14 @@ public class RecyclerList extends FrameLayout {
     }
 
     /**
+     * 刷新完成
+     * @param refreshing
+     */
+    public void setRefreshing(boolean refreshing){
+        mSwipeRefresh.setRefreshing(refreshing);
+    }
+
+    /**
      * Set the colors for the SwipeRefreshLayout states
      */
     public void setRefreshingColorResources(@ColorRes int colRes1, @ColorRes int colRes2, @ColorRes int colRes3, @ColorRes int colRes4) {
@@ -386,6 +395,14 @@ public class RecyclerList extends FrameLayout {
      */
     public boolean isLoadingMore() {
         return isLoadingMore;
+    }
+
+    /**
+     * 更多加载完成
+     */
+    public void onLoadCompleted(){
+        isLoadingMore = false;
+        mMoreView.setVisibility(View.GONE);
     }
 
     public int getItemCountLeftToLoadMore() {
@@ -435,14 +452,7 @@ public class RecyclerList extends FrameLayout {
      */
     public static abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter {
 
-        private List<T> mData;
-
-        public Adapter(List<T> data) {
-            if (data == null) {
-                throw new IllegalArgumentException("data may not be null");
-            }
-            mData = data;
-        }
+        protected List<T> mData = new ArrayList<>();
 
         public List<T> getData() {
             return mData;
@@ -452,10 +462,11 @@ public class RecyclerList extends FrameLayout {
          * 设置数据源
          */
         public void setData(List<T> data) {
+            mData.clear();
             if (data != null) {
                 mData = data;
-                notifyDataSetChanged();
             }
+            notifyDataSetChanged();
         }
 
         /**
