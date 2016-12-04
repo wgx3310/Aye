@@ -7,6 +7,7 @@ import java.util.List;
 
 import aye.model.Block;
 import aye.model.DisplayItem;
+import aye.util.DisplayItemUtils;
 import aye.util.ToastUtils;
 import aye.view.BaseCardView;
 import aye.view.widget.SliderView;
@@ -43,7 +44,7 @@ public class SliderCardView extends BaseCardView<Block<DisplayItem>> {
         List<DisplayItem> items = data.items;
         List<SliderView.Slider> sliders = new ArrayList<>();
         for (DisplayItem item : items){
-            SliderView.Slider slider = new SliderView.Slider(item.images.poster().url, item.title);
+            SliderView.Slider slider = new SliderView.Slider(DisplayItemUtils.getPostUrl(item), item.title);
             sliders.add(slider);
         }
         mSliderView.setSlider(sliders);

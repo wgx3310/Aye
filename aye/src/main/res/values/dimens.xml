@@ -13,20 +13,26 @@
     <!-- tab end -->
 
     <!-- font size start -->
-    <dimen name="font_size_36">12dp</dimen>
-    <dimen name="font_size_42">14dp</dimen>
-    <dimen name="font_size_51">17dp</dimen>
-    <dimen name="font_size_60">20dp</dimen>
-    <dimen name="font_size_72">24dp</dimen>
+    <dimen name="font_size_36">12sp</dimen>
+    <dimen name="font_size_42">14sp</dimen>
+    <dimen name="font_size_48">16sp</dimen>
+    <dimen name="font_size_51">17sp</dimen>
+    <dimen name="font_size_60">20sp</dimen>
+    <dimen name="font_size_72">24sp</dimen>
     <!-- font size end -->
 
     <!-- common size start -->
+    <dimen name="size_1">0.33dp</dimen>
     <dimen name="size_10">3.3dp</dimen>
     <dimen name="size_15">5dp</dimen>
     <dimen name="size_21">7dp</dimen>
     <dimen name="size_24">8dp</dimen>
+    <dimen name="size_48">16dp</dimen>
     <dimen name="size_90">30dp</dimen>
+    <dimen name="size_140">46.67dp</dimen>
     <dimen name="size_150">50dp</dimen>
+    <dimen name="size_240">80dp</dimen>
+    <dimen name="size_300">100dp</dimen>
     <dimen name="size_480">160dp</dimen>
     <dimen name="size_600">200dp</dimen>
     <!-- common size end -->

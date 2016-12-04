@@ -37,4 +37,8 @@ public abstract class BaseCardView<T extends DisplayItem> extends RelativeLayout
 
     protected abstract int getLayoutId();
 
+    @Override
+    public boolean isClickable() {
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package aye.lang;
 
 import java.util.ArrayList;
 
+import aye.LayoutConstants;
 import aye.model.Block;
 import aye.model.DisplayItem;
 import aye.model.main.MainStory;
@@ -16,7 +17,7 @@ public class DisplayItemFactory {
     /**
      * 将精选数据转化为Block
      */
-    public static Block<DisplayItem> convertMainStory2Block(MainStory mainStory){
+    public static Block<DisplayItem> convertMainStory2Block(MainStory mainStory) {
         if (mainStory == null) return null;
 
         Block<DisplayItem> block = new Block<>();
@@ -25,7 +26,7 @@ public class DisplayItemFactory {
 
             Block<DisplayItem> topBlock = new Block<>();
             topBlock.ui = new DisplayItem.UI();
-            topBlock.ui.put("id", String.valueOf(1));
+            topBlock.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_SLIDE));
             topBlock.items = new ArrayList<>();
             for (MainStory.Story story : mainStory.top_stories) {
                 DisplayItem item = new DisplayItem();
@@ -43,18 +44,49 @@ public class DisplayItemFactory {
         }
 
         if (mainStory.stories != null && !mainStory.stories.isEmpty()) {
-            for (MainStory.Story story : mainStory.stories) {
-                Block item = new Block();
-                item.id = String.valueOf(story.id);
-                item.ui = new DisplayItem.UI();
-                item.ui.put("id", String.valueOf(2));
-                item.title = story.title;
-                item.extra = story.prefix;
-                item.images = new DisplayItem.ImageGroup();
+
+            Block<DisplayItem> port = new Block<>();
+            port.ui = new DisplayItem.UI();
+            port.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_PORT));
+            port.items = new ArrayList<>();
+
+            DisplayItem title = new DisplayItem();
+            title.ui = new DisplayItem.UI();
+            title.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_TITLE));
+            title.ui.put("divider", String.valueOf(true));
+            title.title = "今日精选";
+            port.items.add(title);
+
+            for (int i = 0 ; i < 4; i++){
+                MainStory.Story story = mainStory.stories.get(i);
+                DisplayItem di = new DisplayItem();
+                di.ui = new DisplayItem.UI();
+                di.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_SHORT));
+                di.id = String.valueOf(story.id);
+                di.title = story.title;
+                di.extra = story.prefix;
+                di.images = new DisplayItem.ImageGroup();
                 DisplayItem.Image image = new DisplayItem.Image();
-                image.urls = story.images;
-                item.images.put("poster", image);
-                block.blocks.add(item);
+                image.url = story.images.isEmpty() ? "" : story.images.get(0);
+                di.images.put("poster", image);
+                port.items.add(di);
+            }
+
+
+            block.blocks.add(port);
+
+            for (MainStory.Story story : mainStory.stories) {
+                Block di = new Block();
+                di.ui = new DisplayItem.UI();
+                di.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_SHORT));
+                di.id = String.valueOf(story.id);
+                di.title = story.title;
+                di.extra = story.prefix;
+                di.images = new DisplayItem.ImageGroup();
+                DisplayItem.Image image = new DisplayItem.Image();
+                image.url = story.images.isEmpty() ? "" : story.images.get(0);
+                di.images.put("poster", image);
+                block.blocks.add(di);
             }
         }
         return block;
@@ -63,17 +95,17 @@ public class DisplayItemFactory {
     /**
      * 将热门数据转化为Block
      */
-    public static Block<DisplayItem> convertMainHot2Block(MainHot hot){
-        if(hot == null) return null;
+    public static Block<DisplayItem> convertMainHot2Block(MainHot hot) {
+        if (hot == null) return null;
 
         Block<DisplayItem> block = new Block<DisplayItem>();
         block.blocks = new ArrayList<>();
-        if (hot.recent != null && !hot.recent.isEmpty()){
-            for (MainHot.Recent recent : hot.recent){
+        if (hot.recent != null && !hot.recent.isEmpty()) {
+            for (MainHot.Recent recent : hot.recent) {
                 Block item = new Block();
                 item.id = String.valueOf(recent.id);
                 item.ui = new DisplayItem.UI();
-                item.ui.put("id", String.valueOf(3));
+                item.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_SHORT));
                 item.title = recent.title;
                 item.images = new DisplayItem.ImageGroup();
                 DisplayItem.Image image = new DisplayItem.Image();

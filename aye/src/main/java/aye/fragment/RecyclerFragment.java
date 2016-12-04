@@ -1,7 +1,6 @@
 package aye.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import aye.adapter.RecyclerAdapter;
@@ -57,11 +56,8 @@ public class RecyclerFragment extends BaseFragment {
 
         mRecyclerList.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         mRecyclerList.setOnRefreshListener(() -> loadData());
-        mRecyclerList.setOnItemClickListener(new RecyclerList.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView rv, RecyclerView.ViewHolder vh) {
-                ToastUtils.show("onItemClick " + vh.getAdapterPosition() + " - " + mAdapter.getItem(vh.getAdapterPosition()).id);
-            }
+        mRecyclerList.setOnItemClickListener((vh)->{
+            ToastUtils.show("onItemClick " + vh.getAdapterPosition() + " - " + mAdapter.getItem(vh.getAdapterPosition()).id);
         });
         loadData();
     }

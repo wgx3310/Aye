@@ -35,7 +35,7 @@ public class DisplayItem<T> implements Serializable {
         return data;
     }
 
-    public void setData(T data){
+    public void setData(T data) {
         this.data = data;
     }
 
@@ -57,6 +57,11 @@ public class DisplayItem<T> implements Serializable {
         public float ratio() {
             return getFloat(get("ratio"), 1.0f);
         }
+
+        public boolean divider() {
+            return getBoolean(get("divider"), false);
+        }
+
     }
 
     public static class Hint extends LinkedHashMap<String, String> implements Serializable {
@@ -88,17 +93,44 @@ public class DisplayItem<T> implements Serializable {
         public List<String> urls;
     }
 
-    public static class ImageGroup extends HashMap<String, Image> implements Serializable{
+    public static class ImageGroup extends HashMap<String, Image> implements Serializable {
         private static final long serialVersionUID = 1L;
-        public Image back(){return  get("back");}
-        public Image icon(){return get("icon");}
-        public Image text(){return get("text");}
-        public Image thumbnail(){return get("thumbnail");}
-        public Image poster(){return get("poster");}
-        public Image normal(){return get("normal");}
-        public Image pressed(){return get("pressed");}
-        public Image left_top_corner(){return get("left_top_corner");}
-        public Image right_top_corner(){return get("right_top_corner");}
+
+        public Image back() {
+            return get("back");
+        }
+
+        public Image icon() {
+            return get("icon");
+        }
+
+        public Image text() {
+            return get("text");
+        }
+
+        public Image thumbnail() {
+            return get("thumbnail");
+        }
+
+        public Image poster() {
+            return get("poster");
+        }
+
+        public Image normal() {
+            return get("normal");
+        }
+
+        public Image pressed() {
+            return get("pressed");
+        }
+
+        public Image left_top_corner() {
+            return get("left_top_corner");
+        }
+
+        public Image right_top_corner() {
+            return get("right_top_corner");
+        }
     }
 
     public static class Target implements Serializable {
@@ -122,10 +154,8 @@ public class DisplayItem<T> implements Serializable {
             public String getString(Object obj) {
                 try {
                     if (obj != null) {
-                        if (obj instanceof String)
-                            return (String) obj;
-                        else
-                            return obj.toString();
+                        if (obj instanceof String) return (String) obj;
+                        else return obj.toString();
                     }
                 } catch (Exception ne) {
                     Log.d("DisplayItem", ne.getMessage());

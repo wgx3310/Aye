@@ -4,18 +4,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import aye.common.VH;
 import aye.model.Block;
 import aye.model.DisplayItem;
+import aye.util.DisplayItemUtils;
 import aye.view.BaseCardView;
 import aye.view.ViewCreator;
-import aye.view.ViewType;
+import aye.ViewType;
 import reid.recycler.RecyclerList;
 
 /**
  * Created by reid on 2016/12/3.
  */
 
-public class RecyclerAdapter extends RecyclerList.Adapter<Block<DisplayItem>, RecyclerAdapter.VH> {
+public class RecyclerAdapter extends RecyclerList.Adapter<Block<DisplayItem>, VH> {
 
     public RecyclerAdapter() {
         super();
@@ -34,27 +36,16 @@ public class RecyclerAdapter extends RecyclerList.Adapter<Block<DisplayItem>, Re
 
     @Override
     public int getItemViewType(int position) {
-        return getData().get(position).ui.id();
+        return DisplayItemUtils.getUiId(getData().get(position));
     }
 
     @Override
     public int getSpanSize(int position) {
-        //for test
-        if (getItemViewType(position) > 1){
-            return 4;
-        }
-
         return ViewType.getSpanSize(getItemViewType(position));
     }
 
     @Override
     public int getItemBottomPadding(int position) {
         return ViewType.getBottomPadding(getItemViewType(position));
-    }
-
-    public class VH extends RecyclerView.ViewHolder {
-        public VH(View itemView) {
-            super(itemView);
-        }
     }
 }

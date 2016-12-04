@@ -13,10 +13,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import aye.Constants;
+import aye.common.OnItemClickListener;
 
 /**
  * Created by reid on 2016/11/27.
@@ -236,7 +239,7 @@ public class RecyclerList extends FrameLayout {
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-            mGestureDetector.onTouchEvent(e);
+              mGestureDetector.onTouchEvent(e);
         }
 
         @Override
@@ -248,9 +251,15 @@ public class RecyclerList extends FrameLayout {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             View childView = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+            //如果子View响应点击事件，则交给子View处理
+            if (childView != null && childView.isClickable()){
+                childView.onTouchEvent(e);
+                return true;
+            }
+
             if (childView != null && mOnItemClickListener != null) {
                 RecyclerView.ViewHolder vh = mRecyclerView.getChildViewHolder(childView);
-                mOnItemClickListener.onItemClick(mRecyclerView, vh);
+                mOnItemClickListener.onItemClick(vh);
             }
             return true;
         }
@@ -497,15 +506,47 @@ public class RecyclerList extends FrameLayout {
         return mRecyclerView.getRecycledViewPool();
     }
 
-    public interface OnLoadMoreListener {
-        void onLoadMore(int itemCount, int itemBeforeMoreCount, int maxLastVisiblePosition);
+    public void setHasFixedSize(boolean hasFixedSize){
+        mRecyclerView.setHasFixedSize(hasFixedSize);
+    }
+
+    public void setNestedScrollingEnabled(boolean enabled){
+        mSwipeRefresh.setNestedScrollingEnabled(enabled);
+        mRecyclerView.setNestedScrollingEnabled(enabled);
+    }
+
+    @Override
+    public void setFocusable(boolean focusable) {
+        mSwipeRefresh.setFocusable(focusable);
+        mRecyclerView.setFocusable(focusable);
+        super.setFocusable(focusable);
+    }
+
+    @Override
+    public void setFocusableInTouchMode(boolean focusableInTouchMode) {
+        mSwipeRefresh.setFocusableInTouchMode(focusableInTouchMode);
+        mRecyclerView.setFocusableInTouchMode(focusableInTouchMode);
+        super.setFocusableInTouchMode(focusableInTouchMode);
     }
 
     /**
-     * item点击事件回调
+     * Returns the current {@link GridLayoutManager.SpanSizeLookup} used by the GridLayoutManager.
+     * @return
      */
-    public interface OnItemClickListener {
-        void onItemClick(RecyclerView rv, RecyclerView.ViewHolder vh);
+    public GridLayoutManager.SpanSizeLookup getSpanSizeLookup(){
+        return mDefaultSpanSizeLookup;
+    }
+
+    /**
+     * Returns the number of spans laid out by this grid.
+     * @return
+     */
+    public int getSpanCount(){
+        return mLayoutManager.getSpanCount();
+    }
+
+    public interface OnLoadMoreListener {
+        void onLoadMore(int itemCount, int itemBeforeMoreCount, int maxLastVisiblePosition);
     }
 
     /**
@@ -528,7 +569,7 @@ public class RecyclerList extends FrameLayout {
         public void setData(List<T> data) {
             mData.clear();
             if (data != null) {
-                mData = data;
+                mData.addAll(data);
             }
             notifyDataSetChanged();
         }
