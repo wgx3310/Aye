@@ -57,7 +57,7 @@ public class DisplayItemFactory {
             title.title = "今日精选";
             port.items.add(title);
 
-            for (int i = 0 ; i < 4; i++){
+            for (int i = 0 ; i < mainStory.stories.size(); i++){
                 MainStory.Story story = mainStory.stories.get(i);
                 DisplayItem di = new DisplayItem();
                 di.ui = new DisplayItem.UI();
@@ -67,27 +67,12 @@ public class DisplayItemFactory {
                 di.extra = story.prefix;
                 di.images = new DisplayItem.ImageGroup();
                 DisplayItem.Image image = new DisplayItem.Image();
-                image.url = story.images.isEmpty() ? "" : story.images.get(0);
+                image.url = story.images == null || story.images.isEmpty() ? "" : story.images.get(0);
                 di.images.put("poster", image);
                 port.items.add(di);
             }
 
-
             block.blocks.add(port);
-
-            for (MainStory.Story story : mainStory.stories) {
-                Block di = new Block();
-                di.ui = new DisplayItem.UI();
-                di.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_SHORT));
-                di.id = String.valueOf(story.id);
-                di.title = story.title;
-                di.extra = story.prefix;
-                di.images = new DisplayItem.ImageGroup();
-                DisplayItem.Image image = new DisplayItem.Image();
-                image.url = story.images.isEmpty() ? "" : story.images.get(0);
-                di.images.put("poster", image);
-                block.blocks.add(di);
-            }
         }
         return block;
     }

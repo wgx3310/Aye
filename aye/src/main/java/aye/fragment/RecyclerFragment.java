@@ -1,6 +1,7 @@
 package aye.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import aye.adapter.RecyclerAdapter;
@@ -68,7 +69,8 @@ public class RecyclerFragment extends BaseFragment {
             Subscription subscribe = observable.subscribe(d -> {
                 mAdapter.setData(d.blocks);
             }, t -> {
-                ToastUtils.show("加载数据失败");
+                ToastUtils.show("加载数据失败 ");
+                Log.e("TAG", "loadData " + t.getMessage());
                 mRecyclerList.setRefreshing(false);
             });
             addSubscription(subscribe);

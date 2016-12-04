@@ -9,6 +9,7 @@
         android:layout_width="@dimen/size_240"
         android:layout_height="@dimen/size_240"
         android:layout_centerVertical="true"
+        android:src="@drawable/default_icon_square"
         android:layout_margin="@dimen/size_48"
         android:scaleType="centerCrop"/>
 
