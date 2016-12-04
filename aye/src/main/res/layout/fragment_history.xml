@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <aye.view.widget.DatePicker
+            android:id="@+id/history_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <reid.recycler.RecyclerList
+            android:id="@+id/history_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:recyclerClipToPadding="false"
+            app:recyclerPadding="@dimen/size_10"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/history_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/size_90"
+        android:src="@drawable/ic_calender"
+        app:borderWidth="0dp"/>
+</android.support.design.widget.CoordinatorLayout>

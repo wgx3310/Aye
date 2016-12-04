@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/com_bg_gray"
-    app:clipToPadding="false"
+    app:recyclerClipToPadding="false"
     app:recyclerPaddingTop="@dimen/size_30"
     />

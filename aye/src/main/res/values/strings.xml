@@ -9,6 +9,12 @@
     <string name="hint_first_launch">欢迎首次使用</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!-- drawer title start -->
+    <string name="nav_news">新闻</string>
+    <string name="nav_tools">工具</string>
+    <string name="nav_history">历史上的今天</string>
+    <!-- drawer title end -->
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

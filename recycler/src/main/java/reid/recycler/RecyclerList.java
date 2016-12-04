@@ -13,12 +13,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -97,8 +95,8 @@ public class RecyclerList extends FrameLayout {
      */
     private void initAttrs(AttributeSet attrs) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerList);
-        mClipToPadding = array.getBoolean(R.styleable.RecyclerList_clipToPadding, false);
-        mPadding = array.getInt(R.styleable.RecyclerList_recyclerPadding, -1);
+        mClipToPadding = array.getBoolean(R.styleable.RecyclerList_recyclerClipToPadding, false);
+        mPadding = (int) array.getDimension(R.styleable.RecyclerList_recyclerPadding, -1f);
         mPaddingTop = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingTop, 0.0f);
         mPaddingBottom = (int) array.getDimension(R.styleable.RecyclerList_recyclerPaddingBottom,
                 0.0f);
@@ -144,13 +142,12 @@ public class RecyclerList extends FrameLayout {
         }
     };
 
-    private RecyclerView.ItemDecoration mDefaultItemDecoration = new RecyclerView.ItemDecoration(){
+    private RecyclerView.ItemDecoration mDefaultItemDecoration = new RecyclerView.ItemDecoration() {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView
                 .State state) {
             int childAdapterPosition = parent.getChildAdapterPosition(view);
-            GridLayoutManager.SpanSizeLookup spanSizeLookup = mLayoutManager
-                    .getSpanSizeLookup();
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = mLayoutManager.getSpanSizeLookup();
             int spanIndex = spanSizeLookup.getSpanIndex(childAdapterPosition, mLayoutManager
                     .getSpanCount());
             int spanSize = spanSizeLookup.getSpanSize(childAdapterPosition);
@@ -239,7 +236,7 @@ public class RecyclerList extends FrameLayout {
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-              mGestureDetector.onTouchEvent(e);
+            mGestureDetector.onTouchEvent(e);
         }
 
         @Override
@@ -252,7 +249,7 @@ public class RecyclerList extends FrameLayout {
         public boolean onSingleTapUp(MotionEvent e) {
             View childView = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
             //如果子View响应点击事件，则交给子View处理
-            if (childView != null && childView.isClickable()){
+            if (childView != null && childView.isClickable()) {
                 childView.onTouchEvent(e);
                 return true;
             }
@@ -495,22 +492,22 @@ public class RecyclerList extends FrameLayout {
     /**
      * 设置缓存池
      */
-    public void setRecyclerViewPool(RecyclerView.RecycledViewPool pool){
+    public void setRecyclerViewPool(RecyclerView.RecycledViewPool pool) {
         mRecyclerView.setRecycledViewPool(pool);
     }
 
     /**
      * 获取当前缓存池
      */
-    public RecyclerView.RecycledViewPool getRecyclerViewPool(){
+    public RecyclerView.RecycledViewPool getRecyclerViewPool() {
         return mRecyclerView.getRecycledViewPool();
     }
 
-    public void setHasFixedSize(boolean hasFixedSize){
+    public void setHasFixedSize(boolean hasFixedSize) {
         mRecyclerView.setHasFixedSize(hasFixedSize);
     }
 
-    public void setNestedScrollingEnabled(boolean enabled){
+    public void setNestedScrollingEnabled(boolean enabled) {
         mSwipeRefresh.setNestedScrollingEnabled(enabled);
         mRecyclerView.setNestedScrollingEnabled(enabled);
     }
@@ -531,17 +528,19 @@ public class RecyclerList extends FrameLayout {
 
     /**
      * Returns the current {@link GridLayoutManager.SpanSizeLookup} used by the GridLayoutManager.
+     *
      * @return
      */
-    public GridLayoutManager.SpanSizeLookup getSpanSizeLookup(){
+    public GridLayoutManager.SpanSizeLookup getSpanSizeLookup() {
         return mDefaultSpanSizeLookup;
     }
 
     /**
      * Returns the number of spans laid out by this grid.
+     *
      * @return
      */
-    public int getSpanCount(){
+    public int getSpanCount() {
         return mLayoutManager.getSpanCount();
     }
 
@@ -616,7 +615,7 @@ public class RecyclerList extends FrameLayout {
         }
 
         //获取item的BottomPadding
-        public int getItemBottomPadding(int position){
+        public int getItemBottomPadding(int position) {
             return defaultItemBottomPadding;
         }
 

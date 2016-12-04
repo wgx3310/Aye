@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RecyclerList">
-        <attr name="clipToPadding" format="boolean"/>
+        <attr name="recyclerClipToPadding" format="boolean"/>
         <attr name="recyclerPadding" format="dimension|reference"/>
         <attr name="recyclerPaddingLeft" format="dimension|reference"/>
         <attr name="recyclerPaddingRight" format="dimension|reference"/>

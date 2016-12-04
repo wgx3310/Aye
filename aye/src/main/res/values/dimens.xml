@@ -25,10 +25,13 @@
     <dimen name="size_1">0.33dp</dimen>
     <dimen name="size_10">3.3dp</dimen>
     <dimen name="size_15">5dp</dimen>
+    <dimen name="size_18">6dp</dimen>
     <dimen name="size_21">7dp</dimen>
     <dimen name="size_24">8dp</dimen>
     <dimen name="size_48">16dp</dimen>
+    <dimen name="size_60">20dp</dimen>
     <dimen name="size_90">30dp</dimen>
+    <dimen name="size_135">45dp</dimen>
     <dimen name="size_140">46.67dp</dimen>
     <dimen name="size_150">50dp</dimen>
     <dimen name="size_240">80dp</dimen>

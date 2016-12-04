@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import aye.fragment.BaseFragment;
+import aye.fragment.HistoryFragment;
 import aye.util.ToastUtils;
 import reid.aye.R;
 import aye.fragment.HomeFragment;
@@ -23,6 +25,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private long mLastBackTime;
 
+    private BaseFragment mHomeFragment;
+    private BaseFragment mHistoryFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +38,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         initDrawer();
         initNavigation();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.content_layout, HomeFragment.newInstance()).commitAllowingStateLoss();
+        initFragment();
+        switchFragment(R.id.content_layout, mHomeFragment);
+    }
+
+    private void initFragment() {
+        mHomeFragment = HomeFragment.newInstance();
+        mHistoryFragment = HistoryFragment.newInstance();
     }
 
     /**
@@ -73,6 +84,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_news:
                 break;
             case R.id.nav_camera:
+                break;
+            case R.id.nav_history:
+                switchFragment(R.id.content_layout, mHistoryFragment);
                 break;
             case R.id.nav_manage:
                 break;
