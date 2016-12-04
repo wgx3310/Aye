@@ -119,6 +119,7 @@ public class RecyclerList extends FrameLayout {
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), DEFAULT_SPAN_COUNT);
+        mLayoutManager.setRecycleChildrenOnDetach(true);
         mLayoutManager.setSpanSizeLookup(mDefaultSpanSizeLookup);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(mDefaultItemDecoration);
@@ -151,7 +152,7 @@ public class RecyclerList extends FrameLayout {
                     .getSpanCount());
             int spanSize = spanSizeLookup.getSpanSize(childAdapterPosition);
 
-            int bottom = getResources().getDimensionPixelOffset(R.dimen.size_30);
+            int bottom = mAdapter.getItemBottomPadding(childAdapterPosition);
             int padding = getResources().getDimensionPixelOffset(R.dimen.size_40);
             int divider = getResources().getDimensionPixelOffset(R.dimen.size_10);
             if (spanSize == mLayoutManager.getSpanCount()) {
@@ -480,6 +481,20 @@ public class RecyclerList extends FrameLayout {
      */
     public void smoothScrollBy(int dx, int dy) {
         mRecyclerView.smoothScrollBy(dx, dy);
+    }
+
+    /**
+     * 设置缓存池
+     */
+    public void setRecyclerViewPool(RecyclerView.RecycledViewPool pool){
+        mRecyclerView.setRecycledViewPool(pool);
+    }
+
+    /**
+     * 获取当前缓存池
+     */
+    public RecyclerView.RecycledViewPool getRecyclerViewPool(){
+        return mRecyclerView.getRecycledViewPool();
     }
 
     public interface OnLoadMoreListener {

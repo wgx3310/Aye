@@ -12,7 +12,7 @@
 
 
     <color name="tab_text_color">#AAFFFFFF</color>
-
+    <color name="com_bg_gray">#FFE5E6E6</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="p_96_white">#F5FFFFFF</color>
