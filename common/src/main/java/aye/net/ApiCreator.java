@@ -8,6 +8,7 @@ public class ApiCreator {
 
     private static BiliApi mBiliApi;
     private static MainApi mMainApi;
+    private static HistoryApi mHistoryApi;
 
     public static synchronized BiliApi getBiliApi(){
         if (mBiliApi == null){
@@ -23,4 +24,10 @@ public class ApiCreator {
         return mMainApi;
     }
 
+    public static synchronized HistoryApi getHistoryApi(){
+        if (mHistoryApi == null){
+            mHistoryApi = HttpEngine.get().createApi(HistoryApi.class, "http://v.juhe.cn/todayOnhistory/");
+        }
+        return mHistoryApi;
+    }
 }

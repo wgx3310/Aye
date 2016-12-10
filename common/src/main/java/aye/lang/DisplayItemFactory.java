@@ -1,10 +1,12 @@
 package aye.lang;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import aye.LayoutConstants;
 import aye.model.Block;
 import aye.model.DisplayItem;
+import aye.model.history.History;
 import aye.model.main.MainStory;
 import aye.model.main.MainHot;
 
@@ -104,4 +106,21 @@ public class DisplayItemFactory {
         return block;
     }
 
+    public static Block<DisplayItem> convertHistory2Block(List<History> histories){
+        if (histories == null || histories.isEmpty()) return  null;
+
+        Block<DisplayItem> block = new Block<>();
+        block.blocks = new ArrayList<>();
+        for (History history: histories){
+            Block item = new Block();
+            item.ui = new DisplayItem.UI();
+            item.ui.put("id", String.valueOf(LayoutConstants.ID_CARD_HISTORY));
+            item.title = history.date;
+            item.desc = history.title;
+            item.id = history.e_id;
+            item.subTitle = history.day;
+            block.blocks.add(item);
+        }
+        return block;
+    }
 }

@@ -41,11 +41,14 @@ public class SplashActivity extends BaseActivity {
         }
 
         mAnimator = img.animate().scaleX(1.13f).scaleY(1.13f).setDuration(2000)
-                .setStartDelay(1000).withEndAction(()->{
-                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-                    finish();
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    Logger.d(TAG, "animator finish, start home activity");
+                .setStartDelay(1000).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        finish();
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        Logger.d(TAG, "animator finish, start home activity");
+                    }
                 });
         mAnimator.start();
     }

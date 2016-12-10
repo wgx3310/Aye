@@ -16,7 +16,8 @@ import aye.util.ToastUtils;
 import reid.aye.R;
 import aye.fragment.HomeFragment;
 
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements NavigationView
+        .OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
@@ -53,6 +54,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void initNavigation() {
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
+        mNavView.setCheckedItem(R.id.nav_news);
+        setTitle(R.string.nav_news);
     }
 
     /**
@@ -60,7 +63,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void initDrawer() {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string
+                .navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(mToggle);
         mHandler.post(() -> mToggle.syncState());
     }
@@ -80,12 +84,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_news:
+                setTitle(R.string.nav_news);
+                switchFragment(R.id.content_layout, mHomeFragment);
                 break;
             case R.id.nav_camera:
                 break;
             case R.id.nav_history:
+                setTitle(R.string.nav_history);
                 switchFragment(R.id.content_layout, mHistoryFragment);
                 break;
             case R.id.nav_manage:
@@ -97,7 +104,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(settingIntent);
                 break;
         }
-        mHandler.postDelayed(()->mDrawer.closeDrawer(GravityCompat.START), 200);
+        mHandler.postDelayed(() -> mDrawer.closeDrawer(GravityCompat.START), 200);
 
         return true;
     }

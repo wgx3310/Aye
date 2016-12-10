@@ -23,6 +23,7 @@
 
     <!-- common size start -->
     <dimen name="size_1">0.33dp</dimen>
+    <dimen name="size_6">2dp</dimen>
     <dimen name="size_10">3.3dp</dimen>
     <dimen name="size_15">5dp</dimen>
     <dimen name="size_18">6dp</dimen>

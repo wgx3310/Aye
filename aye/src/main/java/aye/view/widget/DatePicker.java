@@ -92,21 +92,21 @@ public class DatePicker extends LinearLayout implements View.OnClickListener {
     /**
      * 获取当前选中的年
      */
-    public int getSelectedYear() {
+    public int getYear() {
         return year;
     }
 
     /**
      * 获取当前选中的月
      */
-    public int getSelectedMonth() {
+    public int getMonth() {
         return month;
     }
 
     /**
      * 获取当前选中的日
      */
-    public int getSelectedDay() {
+    public int getDay() {
         return day;
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="reid.aye">
+          package="reid.aye">
 
     <application
         android:name="aye.app.App"
@@ -14,37 +14,45 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name="aye.ui.HomeActivity"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="aye.ui.CalendarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="aye.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="aye.app.ApiActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="aye" android:host="reid" android:pathPrefix="/home"/>
-                <data android:scheme="aye" android:host="reid" android:pathPrefix="/setting"/>
+                <data
+                    android:host="reid"
+                    android:pathPrefix="/home"
+                    android:scheme="aye"/>
+                <data
+                    android:host="reid"
+                    android:pathPrefix="/setting"
+                    android:scheme="aye"/>
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

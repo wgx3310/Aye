@@ -5,6 +5,7 @@ import android.content.Context;
 import aye.LayoutConstants;
 import aye.view.block.CardShortBlockView;
 import aye.view.block.DefaultCardView;
+import aye.view.block.HistoryBlockView;
 import aye.view.block.PortBlockView;
 import aye.view.block.SliderCardView;
 import aye.view.block.TitleBlockView;
@@ -15,10 +16,10 @@ import aye.view.block.TitleBlockView;
 
 public class ViewCreator {
 
-    public static BaseCardView createCardView(Context context, int type){
+    public static BaseCardView createCardView(Context context, int type) {
 
         BaseCardView view = null;
-        switch (type){
+        switch (type) {
             case LayoutConstants.ID_CARD_SLIDE:
                 view = new SliderCardView(context);
                 break;
@@ -31,7 +32,9 @@ public class ViewCreator {
             case LayoutConstants.ID_CARD_SHORT:
                 view = new CardShortBlockView(context);
                 break;
-
+            case LayoutConstants.ID_CARD_HISTORY:
+                view = new HistoryBlockView(context);
+                break;
             case LayoutConstants.ID_VIEW_DEFAULT:
             default:
                 view = new DefaultCardView(context);
