@@ -31,7 +31,6 @@ public class DataLoader {
                         .rxSchedulerHelper()).map(new Func1<MainStory, Block<DisplayItem>>() {
                     @Override
                     public Block<DisplayItem> call(MainStory mainStory) {
-                        Logger.e("TAG", "DataLoader loadData getDailyList" + mainStory);
                         return DisplayItemFactory.convertMainStory2Block(mainStory);
                     }
                 });
@@ -41,7 +40,6 @@ public class DataLoader {
                         .rxSchedulerHelper()).map(new Func1<MainStory, Block<DisplayItem>>() {
                     @Override
                     public Block<DisplayItem> call(MainStory mainStory) {
-                        Logger.e("TAG", "DataLoader loadData getThemeList 4 " + mainStory);
                         return DisplayItemFactory.convertMainStory2Block(mainStory);
                     }
                 });
@@ -51,7 +49,6 @@ public class DataLoader {
                         .rxSchedulerHelper()).map(new Func1<MainStory, Block<DisplayItem>>() {
                     @Override
                     public Block<DisplayItem> call(MainStory mainStory) {
-                        Logger.e("TAG", "DataLoader loadData getThemeList 3 " + mainStory);
                         return DisplayItemFactory.convertMainStory2Block(mainStory);
                     }
                 });
@@ -61,7 +58,6 @@ public class DataLoader {
                         .rxSchedulerHelper()).map(new Func1<MainStory, Block<DisplayItem>>() {
                     @Override
                     public Block<DisplayItem> call(MainStory mainStory) {
-                        Logger.e("TAG", "DataLoader loadData getThemeList 10 " + mainStory);
                         return DisplayItemFactory.convertMainStory2Block(mainStory);
                     }
                 });
@@ -71,7 +67,6 @@ public class DataLoader {
                         .rxSchedulerHelper()).map(new Func1<MainHot, Block<DisplayItem>>() {
                     @Override
                     public Block<DisplayItem> call(MainHot hot) {
-                        Log.e("TAG", "DataLoader loadData getHotList" + hot);
                         return DisplayItemFactory.convertMainHot2Block(hot);
                     }
                 });
@@ -87,7 +82,6 @@ public class DataLoader {
                 Block<DisplayItem>>() {
             @Override
             public Block<DisplayItem> call(HttpResponse<History> historyHttpResponse) {
-                Log.e("TAG", "DataLoader loadTodayHistory " + historyHttpResponse);
                 return DisplayItemFactory.convertHistory2Block(historyHttpResponse.result);
             }
         });

@@ -8,10 +8,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import aye.fragment.BaseFragment;
 import aye.fragment.HistoryFragment;
+import aye.fragment.ToolsFragment;
 import aye.util.ToastUtils;
 import reid.aye.R;
 import aye.fragment.HomeFragment;
@@ -27,6 +27,7 @@ public class HomeActivity extends BaseActivity implements NavigationView
     private long mLastBackTime;
 
     private BaseFragment mHomeFragment;
+    private BaseFragment mToolsFragment;
     private BaseFragment mHistoryFragment;
 
     @Override
@@ -45,6 +46,7 @@ public class HomeActivity extends BaseActivity implements NavigationView
 
     private void initFragment() {
         mHomeFragment = HomeFragment.newInstance();
+        mToolsFragment = ToolsFragment.newInstance();
         mHistoryFragment = HistoryFragment.newInstance();
     }
 
@@ -91,11 +93,13 @@ public class HomeActivity extends BaseActivity implements NavigationView
                 break;
             case R.id.nav_camera:
                 break;
+            case R.id.nav_tools:
+                setTitle(R.string.nav_tools);
+                switchFragment(R.id.content_layout, mToolsFragment);
+                break;
             case R.id.nav_history:
                 setTitle(R.string.nav_history);
                 switchFragment(R.id.content_layout, mHistoryFragment);
-                break;
-            case R.id.nav_manage:
                 break;
             case R.id.nav_share:
                 break;

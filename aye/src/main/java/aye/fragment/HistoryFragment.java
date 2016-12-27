@@ -96,4 +96,9 @@ public class HistoryFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }
